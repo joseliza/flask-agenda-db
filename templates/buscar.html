@@ -1,0 +1,32 @@
+{% extends "home.html" %}
+
+{% block content %}
+<h2>Buscar Contacto</h2>
+<form method="get" action="/buscar">
+    <input type="text" name="nombre" placeholder="Ingrese nombre">
+    <button type="submit">Buscar</button>
+</form>
+
+<hr>
+
+{% if resultado is not none %}
+    {% if resultado %}
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+        </tr>
+        {% for fila in resultado %}
+        <tr>
+            <td>{{ fila[0] }}</td>
+            <td>{{ fila[1] }}</td>
+        </tr>
+        {% endfor %}
+
+    {% else %}
+        <div>
+            No se encontró el contacto.
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "home.html" %}
+
+{% block content %}
+<h2>Lista de Contactos</h2>
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>Nombre</th>
+        <th>Teléfono</th>
+    </tr>
+    {% for fila in contactos %}
+    <tr>
+        <td>{{ fila[0] }}</td>
+        <td>{{ fila[1] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "home.html" %}
+
+{% block content %}
+<h2>Insertar Contacto</h2>
+<form method="post" action="/insertar">
+    <input type="text" name="nombre" placeholder="Nombre" required>
+    <input type="text" name="telefono" placeholder="Teléfono" required>
+    <button type="submit">Guardar</button>
+</form>
+{% if mensaje %}
+<div>
+    {{ mensaje }}
+</div>
+{% endif %}
+{% endblock %}
