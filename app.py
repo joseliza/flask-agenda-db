@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import pymysql
 
-# Conexión a MySQL con pymysql
+# Conexión a MySQL con pymysql (adpta los parámetros a tu servidor local)
 def get_db_connection():
     return pymysql.connect(
         host="10.3.29.20",
@@ -27,23 +27,28 @@ def listar():
     return render_template("listar.html", contactos=contactos)
     
 
-@app.route("/buscar", methods=["GET"])
+@app.route("/buscar", methods=["GET", "POST"])
 def buscar():
-    nombre = request.args.get("nombre")
-    resultado = None
+    mensaje=""
+    resultado = ()
 
-    if nombre:
-        connection = get_db_connection()
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT nombre, telefono FROM contactos where nombre = %s", (nombre))
-            contactos = cursor.fetchall()
-        connection.close()
-        resultado = contactos
-        print(type(resultado))
-    else:
-        resultado = ()
-
-    return render_template("buscar.html", resultado=resultado)
+    if request.method == "POST":
+        nombre = request.form["nombre"]
+        if nombre:
+            connection = get_db_connection()
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT nombre, telefono FROM contactos where nombre = %s", (nombre))
+                contactos = cursor.fetchall()
+                if len(contactos) == 0:
+                    resultado = ()
+                    mensaje = "Contacto no encontrado."
+                connection.close()
+                resultado = contactos
+        else:
+            resultado = ()
+            mensaje = "No has introducido ningún nombre."
+        
+    return render_template("buscar.html", resultado=resultado, mensaje=mensaje)
 
 @app.route("/insertar", methods=["GET", "POST"])
 def insertar():
