@@ -44,10 +44,7 @@ def buscar():
                     mensaje = "Contacto no encontrado."
                 connection.close()
                 resultado = contactos
-        else:
-            resultado = ()
-            mensaje = "No has introducido ningún nombre."
-        
+         
     return render_template("buscar.html", resultado=resultado, mensaje=mensaje)
 
 @app.route("/insertar", methods=["GET", "POST"])
@@ -81,7 +78,7 @@ def borrar():
             if len(contactos) == 0:
                 mensaje = "Contacto no encontrado."
             else:
-                # No existe, borrar
+                # Existe, borrar
                 with connection.cursor() as cursor:
                     cursor.execute("delete from contactos where nombre = %s", (nombre))
                     mensaje = f"Contacto {nombre} eliminado."

@@ -3,19 +3,13 @@
 {% block content %}
 <h2>Buscar Contacto</h2>
 <form method="post" action="/buscar">
-    <input type="text" name="nombre" placeholder="Ingrese nombre">
+    <input type="text" name="nombre" placeholder="Ingrese nombre" required>
     <button type="submit">Buscar</button>
 </form>
 
 <hr>
 
-{% if not resultado %}
-    {% if mensaje%}
-    <div>
-        {{ mensaje }}
-    </div>
-    {% endif %}
-{% else %}
+{% if resultado%}
 <table class="table table-striped table-bordered">
     <tr>
         <th>Nombre</th>
@@ -27,5 +21,9 @@
         <td>{{ fila[1] }}</td>
     </tr>
     {% endfor %}
+{% else %}
+<div>
+    {{ mensaje }}
+</div>
 {% endif %}
 {% endblock %}
