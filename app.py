@@ -34,16 +34,14 @@ def buscar():
 
     if request.method == "POST":
         nombre = request.form["nombre"]
-        if nombre:
-            connection = get_db_connection()
-            with connection.cursor() as cursor:
-                cursor.execute("SELECT nombre, telefono FROM contactos where nombre = %s", (nombre))
-                contactos = cursor.fetchall()
-                if len(contactos) == 0:
-                    resultado = ()
-                    mensaje = "Contacto no encontrado."
-                connection.close()
-                resultado = contactos
+        connection = get_db_connection()
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT nombre, telefono FROM contactos where nombre = %s", (nombre))
+            contactos = cursor.fetchall()
+            if len(contactos) == 0:
+                mensaje = "Contacto no encontrado."
+            connection.close()
+            resultado = contactos
          
     return render_template("buscar.html", resultado=resultado, mensaje=mensaje)
 
