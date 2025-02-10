@@ -13,5 +13,5 @@ $ source .venv/bin/activate
 ```
 Instalamos **flask** y **pymysql**:
 ```bash
-(.venv)$ pip install flask
+(.venv)$ pip install flask pymysql
 ```
